@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import css from './ImageGallery.module.css';
+import PropTypes from 'prop-types';
 
 export class ImageGallery extends Component {
   constructor(props) {
@@ -43,3 +44,8 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.array.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+};

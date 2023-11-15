@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import css from './Modal.module.css';
+import PropTypes from 'prop-types';
 
 export class Modal extends Component {
   handleModalBackgroundClick = event => {
@@ -33,3 +34,8 @@ export class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  onCloseModal: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+};
