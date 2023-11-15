@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Oval } from 'react-loader-spinner';
+import css from './Loader.module.css';
 
 export class Loader extends Component {
   render() {
     return (
-      <div className="Loader">
+      <div className={css.Loader}>
         <Oval
           height={100}
           width={100}

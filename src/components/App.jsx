@@ -3,7 +3,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
-//import { Modal } from './Modal/Modal';
+import { Modal } from './Modal/Modal';
 
 import axios from 'axios';
 import Notiflix from 'notiflix';
@@ -76,20 +76,34 @@ export class App extends Component {
     this.fetchImages();
   };
 
+  handleClickImage = imageUrl => {
+    this.setState({ showModal: true, selectedImage: imageUrl });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false, selectedImage: '' });
+  };
+
   render() {
-    const { images, isLoading, page } = this.state;
+    const { images, showModal, selectedImage, isLoading, page } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
-        {isLoading && <Loader />}
+
         <ImageGallery
           images={images.hits}
-          onImageClick={this.handleImageClick}
+          onImageClick={this.handleClickImage}
         />
         {images.total > (page - 1) * 12 && !isLoading && (
           <Button onLoadMore={this.handleLoadMore} />
         )}
-        {/* <Modal /> */}
+        {isLoading && <Loader />}
+        {showModal && (
+          <Modal
+            imageUrl={selectedImage}
+            onCloseModal={this.handleCloseModal}
+          />
+        )}
       </>
     );
   }
