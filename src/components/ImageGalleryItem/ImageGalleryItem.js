@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 export class ImageGalleryItem extends Component {
   render() {
-    const { imageUrl, onImageClick } = this.props;
+    const { imageUrl, imageTags, onImageClick } = this.props;
     return (
       <li className="ImageGalleryItem" onClick={onImageClick}>
-        <img className="ImageGalleryItemImage" src={imageUrl} alt="" />
+        <img className="ImageGalleryItemImage" src={imageUrl} alt={imageTags} />
       </li>
     );
   }

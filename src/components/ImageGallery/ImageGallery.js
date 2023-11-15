@@ -10,6 +10,7 @@ export class ImageGallery extends Component {
           <ImageGalleryItem
             key={image.id}
             imageUrl={image.webformatURL}
+            imageTags={image.tags}
             onImageClick={() => onImageClick(image.largeImageURL)}
           />
         ))}
