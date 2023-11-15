@@ -13,7 +13,7 @@ const API_KEY = '9318257-96b567a3bb5708a16f509a99b';
 
 export class App extends Component {
   state = {
-    images: [],
+    images: { total: 0, hits: [] },
     query: '',
     page: 1,
     isLoading: false,
@@ -50,7 +50,10 @@ export class App extends Component {
         }
 
         this.setState(prevState => ({
-          images: [...prevState.images, ...response.data.hits],
+          images: {
+            total: response.data.totalHits,
+            hits: [...prevState.images.hits, ...response.data.hits],
+          },
           page: prevState.page + 1,
         }));
       })
@@ -63,7 +66,10 @@ export class App extends Component {
   };
 
   handleSearch = query => {
-    this.setState({ query, page: 1, images: [] }, this.fetchImages);
+    this.setState(
+      { query, page: 1, images: { total: 0, hits: [] } },
+      this.fetchImages
+    );
   };
 
   handleLoadMore = () => {
@@ -71,13 +77,16 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, page } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
         {isLoading && <Loader />}
-        <ImageGallery images={images} onImageClick={this.handleImageClick} />
-        {images.length > 0 && !isLoading && (
+        <ImageGallery
+          images={images.hits}
+          onImageClick={this.handleImageClick}
+        />
+        {images.total > (page - 1) * 12 && !isLoading && (
           <Button onLoadMore={this.handleLoadMore} />
         )}
         {/* <Modal /> */}
